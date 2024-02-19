@@ -48,6 +48,8 @@ namespace SPAGame
                             Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
                 });
 
+            builder.Services.AddCors(options => options.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -57,6 +59,7 @@ namespace SPAGame
                 app.UseHsts();
             }
 
+            app.UseCors();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
