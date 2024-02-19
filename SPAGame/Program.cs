@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SPAGame.Data;
 
@@ -13,6 +14,21 @@ namespace SPAGame
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                             options.UseSqlServer(builder.Configuration.GetConnectionString("ApplicationDbContext")));
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddIdentityCore<IdentityUser>()
+                .AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>("SPAGame")
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
+            builder.Services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
+            });
 
             var app = builder.Build();
 
