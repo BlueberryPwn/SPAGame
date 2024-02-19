@@ -10,6 +10,6 @@ namespace SPAGame.Models
         public string? AccountEmail { get; set; }
         public byte[]? AccountPasswordHash { get; set; }
         public byte[]? AccountPasswordSalt { get; set; }
-        public DateTime AccountRegistrationDate { get; set; } = DateTime.UtcNow;
+        public DateTime AccountRegistrationDate { get; set; } = DateTime.Now;
     }
 }

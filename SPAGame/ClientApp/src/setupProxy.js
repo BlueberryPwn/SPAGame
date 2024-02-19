@@ -7,6 +7,7 @@ const target = env.ASPNETCORE_HTTPS_PORT
   ? env.ASPNETCORE_URLS.split(";")[0]
   : "http://localhost:3992";
 
+// Add your controllers here
 const context = ["/auth", "/weatherforecast"];
 
 module.exports = function (app) {

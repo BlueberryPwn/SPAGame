@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SPAGame.Data;
 
@@ -11,9 +12,11 @@ using SPAGame.Data;
 namespace SPAGame.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240219124402_AddGameModel")]
+    partial class AddGameModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,17 +67,14 @@ namespace SPAGame.Migrations
                     b.Property<DateTime>("GameDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("GameLost")
+                    b.Property<bool>("GameFinished")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("GameWon")
+                    b.Property<bool>("GameLost")
                         .HasColumnType("bit");
 
                     b.Property<string>("GameWord")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("GamesCompleted")
-                        .HasColumnType("int");
 
                     b.Property<string>("Guess1")
                         .HasColumnType("nvarchar(max)");
@@ -93,20 +93,7 @@ namespace SPAGame.Migrations
 
                     b.HasKey("GameId");
 
-                    b.HasIndex("AccountId");
-
                     b.ToTable("Games");
-                });
-
-            modelBuilder.Entity("SPAGame.Models.Game", b =>
-                {
-                    b.HasOne("SPAGame.Models.Account", "Account")
-                        .WithMany()
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
                 });
 #pragma warning restore 612, 618
         }

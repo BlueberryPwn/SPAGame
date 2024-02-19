@@ -1,0 +1,8 @@
+# Ignore any files in /bin and /obj Folders
+**/bin/*
+**/obj/*
+.vs/
+**/Service/*
+SPAGame/.vs
+Appsettings.json
+Appsettings.Development.json
