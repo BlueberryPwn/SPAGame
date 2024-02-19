@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SPAGame.Data;
+using SPAGame.Repositories;
 using System.Text;
 
 namespace SPAGame
@@ -14,9 +15,14 @@ namespace SPAGame
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                            options.UseSqlServer(builder.Configuration.GetConnectionString("ApplicationDbContext")));
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddCors(options => options.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 
             builder.Services.AddIdentityCore<IdentityUser>()
                 .AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>("SPAGame")
@@ -47,8 +53,6 @@ namespace SPAGame
                         IssuerSigningKey = new SymmetricSecurityKey(
                             Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
                 });
-
-            builder.Services.AddCors(options => options.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 
             var app = builder.Build();
 
