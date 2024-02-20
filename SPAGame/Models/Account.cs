@@ -1,16 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
-namespace SPAGame.Models.DTO
+namespace SPAGame.Models
 {
-    public class RegisterRequestDto
+    public class Account
     {
-        [Required]
+        [Key]
+        public int AccountId { get; set; }
         public string? AccountName { get; set; }
-        [Required]
-        [DataType(DataType.EmailAddress)]
         public string? AccountEmail { get; set; }
-        [Required]
-        [DataType(DataType.Password)]
+        [JsonIgnore]
         public string? AccountPassword { get; set; }
     }
 }

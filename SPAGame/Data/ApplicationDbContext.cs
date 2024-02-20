@@ -13,5 +13,10 @@ namespace SPAGame.Data
 
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Game>  Games { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Account>(entity => { entity.HasIndex(e => e.AccountEmail).IsUnique(); });
+        }
     }
 }

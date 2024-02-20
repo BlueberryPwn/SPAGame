@@ -1,68 +1,112 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using SPAGame.Data;
+using SPAGame.Models;
 using SPAGame.Models.DTO;
+using SPAGame.Models.Helpers;
 using SPAGame.Repositories;
-using System.Reflection.Metadata.Ecma335;
 
 namespace SPAGame.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api")]
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly UserManager<IdentityUser> userManager;
-        private readonly ITokenRepository tokenRepository;
+        private readonly ApplicationDbContext _context;
+        private readonly JwtService _jwtService;
+        private readonly IAccountRepository _repository;
 
-        public AuthController(UserManager<IdentityUser> userManager, ITokenRepository tokenRepository)
+        public AuthController(ApplicationDbContext applicationDbContext, JwtService jwtService, IAccountRepository repository)
         {
-            this.userManager = userManager;
-            this.tokenRepository = tokenRepository;
+            _context = applicationDbContext;
+            _jwtService = jwtService;
+            _repository = repository;
         }
 
-        // Registration
-        [HttpPost]
-        [Route("Register")]
-        public async Task<IActionResult> Register([FromBody] RegisterRequestDto registerRequestDto)
+        [HttpPost("register")]
+        public IActionResult Register(RegisterDto dto)
         {
-            var identityUser = new IdentityUser
+            var account = new Account
             {
-                UserName = registerRequestDto.AccountName,
-                Email = registerRequestDto.AccountEmail
+                AccountName = dto.AccountName,
+                AccountEmail = dto.AccountEmail,
+                AccountPassword = BCrypt.Net.BCrypt.HashPassword(dto.AccountPassword)
             };
 
-            var identityResult = await userManager.CreateAsync(identityUser, registerRequestDto.AccountPassword);
+            var existingName = _context.Accounts.FirstOrDefault(a => a.AccountName == account.AccountName);
 
-            if (identityResult.Succeeded)
+            if (existingName != null)
             {
-                return Ok("The user was successfully registered. You may now login.");
+                return BadRequest(new { message = "This name is already in use. Please try another." });
             }
-            return BadRequest("ERROR: The user could not be registered. Please try again.");
+
+            var existingEmail = _context.Accounts.FirstOrDefault(a => a.AccountEmail == account.AccountEmail);
+
+            if (existingEmail != null)
+            {
+                return BadRequest(new { message = "This email address is already in use. Please try another." });
+            }
+
+            return Created("Success! The account has been registered.", _repository.Create(account));
         }
 
-        // Login
-        [HttpPost]
-        [Route("Login")]
-        public async Task<IActionResult> Login([FromBody] LoginRequestDto loginRequestDto)
+        [HttpPost("login")]
+        public IActionResult Login(LoginDto dto)
         {
-            var user = await userManager.FindByNameAsync(loginRequestDto.AccountName);
+            var account = _repository.GetByEmail(dto.AccountEmail);
 
-            if (user != null)
+            if (account == null)
             {
-                var checkPasswordResult = await userManager.CheckPasswordAsync(user, loginRequestDto.AccountPassword);
-
-                if (checkPasswordResult)
-                {
-                    var jwttoken = tokenRepository.CreateJWTToken(user);
-                    var response = new LoginRequestDto
-                    {
-                        JwtToken = jwttoken
-                    };
-                    return Ok(response);
-                }
-
+                return BadRequest(new { message = "This email address is incorrect. Please try again." });
             }
-            return BadRequest("ERROR: Username or password was incorrect. Please try again.");
+
+            if (!BCrypt.Net.BCrypt.Verify(dto.AccountPassword, account.AccountPassword))
+            {
+                return BadRequest(new { message = "This password is incorrect. Please try again." });
+            }
+
+            var jwt = _jwtService.Generate(account.AccountId);
+
+            Response.Cookies.Append("jwt", jwt, new CookieOptions
+            {
+                HttpOnly = true
+            });
+
+            return Ok(new
+            {
+                message = "Success! You're now logged in."
+            });
+        }
+
+        [HttpGet("account")]
+        public IActionResult Account()
+        {
+            try
+            {
+                var jwt = Request.Cookies["jwt"];
+
+                var token = _jwtService.Verify(jwt);
+
+                int accountId = int.Parse(token.Issuer);
+
+                var account = _repository.GetById(accountId);
+
+                return Ok(account);
+            }
+            catch (Exception)
+            {
+                return Unauthorized();
+            }
+        }
+
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("jwt");
+
+            return Ok(new
+            {
+                message = "Success! You've been logged out."
+            });
         }
     }
 }
