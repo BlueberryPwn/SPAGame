@@ -7,8 +7,13 @@ namespace SPAGame.Models
     {
         [Key]
         public int AccountId { get; set; }
+
+        [StringLength(12)]
         public string? AccountName { get; set; }
+
+        [StringLength(320)]
         public string? AccountEmail { get; set; }
+
         [JsonIgnore]
         public string? AccountPassword { get; set; }
     }

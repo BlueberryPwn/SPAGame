@@ -1,33 +1,34 @@
-﻿using SPAGame.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using SPAGame.Data;
 using SPAGame.Models;
 
 namespace SPAGame.Repositories
 {
     public class AccountRepository : IAccountRepository
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _dbContext;
 
-        public AccountRepository(ApplicationDbContext context)
+        public AccountRepository(ApplicationDbContext dbContext)
         {
-            _context = context;
+            _dbContext = dbContext;
         }
 
         public Account Create(Account account)
         {
-            _context.Accounts.Add(account);
-            account.AccountId = _context.SaveChanges();
+            _dbContext.Accounts.Add(account);
+            account.AccountId = _dbContext.SaveChanges();
 
             return account;
         }
 
-        public Account GetByEmail(string accountEmail)
+        public Account GetByEmail(string? AccountEmail)
         {
-            return _context.Accounts.First(a => a.AccountEmail == accountEmail);
+            return _dbContext.Accounts.First(a => a.AccountEmail == AccountEmail);
         }
 
-        public Account GetById(int accountId)
+        public Account GetById(int AccountId)
         {
-            return _context.Accounts.First(a => a.AccountId == accountId);
+            return _dbContext.Accounts.First(a => a.AccountId == AccountId);
         }
     }
 }

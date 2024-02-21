@@ -178,10 +178,11 @@ _pkginfo.txt
 # Others
 AuthController.cs
 ClientBin/
-JwtService.cs
+ITokenRepository.cs
 launchSettings.json
 LoginDto.cs
 RegisterDto.cs
+TokenRepository.cs
 ~$*
 *~
 *.dbmdl
