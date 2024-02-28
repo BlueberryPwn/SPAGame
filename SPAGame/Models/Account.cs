@@ -15,6 +15,7 @@ namespace SPAGame.Models
         public string? AccountEmail { get; set; }
 
         [JsonIgnore]
+        [StringLength(100)]
         public string? AccountPassword { get; set; }
     }
 }

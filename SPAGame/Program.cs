@@ -24,18 +24,19 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseCors(options => options
-.WithOrigins(new[] { "http://localhost:3000" })
-.AllowAnyHeader()
-.AllowAnyMethod()
-.AllowCredentials()
-);
-
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseCors(options => options
+.WithOrigins(new[] { "http://localhost:3000", "https://localhost:44487/" }) // .WithOrigins("https://localhost:44487/")
+.AllowAnyHeader()
+.AllowAnyMethod()
+.SetIsOriginAllowed(host => true) // .AllowAnyOrigin()
+.AllowCredentials()
+);
 
 app.UseAuthentication();
 app.UseAuthorization();

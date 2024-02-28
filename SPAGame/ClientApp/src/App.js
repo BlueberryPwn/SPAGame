@@ -1,20 +1,25 @@
-import "./App.css";
+import "./styles/app.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+import Foot from "./components/Foot";
+import Nav from "./components/Nav";
 import Home from "./pages/Home";
-import Footer from "./components/Footer";
-import Navbar from "./components/Navbar";
-import Register from "./components/Register";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <Router>
-        <Navbar />
+        <Nav />
+        <ToastContainer />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
-        <Footer />
+        <Foot />
       </Router>
     </div>
   );
