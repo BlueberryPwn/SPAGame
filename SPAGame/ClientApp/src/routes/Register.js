@@ -1,10 +1,11 @@
+import AuthContext from "../context/AuthContext";
 import { Button, Label, TextInput } from "flowbite-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import axios from "../api/axios";
+import axios from "../lib/axios";
 import * as yup from "yup";
 
 const validationSchema = yup.object().shape({
@@ -34,10 +35,12 @@ const validationSchema = yup.object().shape({
 });
 
 const Register = () => {
-  const redirect = useNavigate();
   const [AccountName, setAccountName] = useState("");
   const [AccountEmail, setAccountEmail] = useState("");
   const [AccountPassword, setAccountPassword] = useState("");
+
+  const { authToken } = useContext(AuthContext);
+
   const account = { AccountName, AccountEmail, AccountPassword };
 
   const {
@@ -66,21 +69,23 @@ const Register = () => {
       toast.success("Account registered successfully.", {
         position: "bottom-right",
       });
-      redirect("/login");
-    } catch (err) {
-      if (err.response.status === 400) {
-        console.log(err);
+      <Navigate to="/login" />;
+    } catch (error) {
+      if (error.response.status === 400) {
+        console.log(error);
         toast.info("This name/email address is already in use.", {
           position: "bottom-right",
         });
-      } else if (err.response.status === 504) {
-        console.log(err);
+      } else if (error.response.status === 504) {
+        console.log(error);
         toast.error("ERROR: There is no connection to the server.", {
           position: "bottom-right",
         });
       }
     }
   };
+
+  if (authToken) return <Navigate to="/" />;
 
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center bg-gradient-to-br from-cyan-500">

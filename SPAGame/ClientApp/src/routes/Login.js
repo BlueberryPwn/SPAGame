@@ -1,10 +1,12 @@
+import AuthContext from "../context/AuthContext";
 import { Button, Label, TextInput } from "flowbite-react";
-import { Link, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import { Link, Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import axios from "../api/axios";
+import axios from "../lib/axios";
 import * as yup from "yup";
 
 const validationSchema = yup.object().shape({
@@ -24,9 +26,11 @@ const validationSchema = yup.object().shape({
 });
 
 const Login = () => {
-  const redirect = useNavigate();
   const [AccountEmail, setAccountEmail] = useState("");
   const [AccountPassword, setAccountPassword] = useState("");
+
+  const { authToken, setAuthToken } = useContext(AuthContext);
+
   const account = { AccountEmail, AccountPassword };
 
   const {
@@ -50,24 +54,27 @@ const Login = () => {
         account
       );
       console.log(response);
+      const token = Cookies.set("token", "valid");
+      setAuthToken(token);
       toast.success("Logged in successfully.", {
         position: "bottom-right",
       });
-      redirect("/");
-    } catch (err) {
-      if (err.response.status === 400) {
-        console.log(err);
+    } catch (error) {
+      if (error.response.status === 400) {
+        console.log(error);
         toast.info("Invalid details.", {
           position: "bottom-right",
         });
-      } else if (err.response.status === 504) {
-        console.log(err);
+      } else if (error.response.status === 504) {
+        console.log(error);
         toast.error("ERROR: There's no connection to the server.", {
           position: "bottom-right",
         });
       }
     }
   };
+
+  if (authToken) return <Navigate to="/" />;
 
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center bg-gradient-to-br from-cyan-500">
@@ -116,5 +123,4 @@ const Login = () => {
     </div>
   );
 };
-
 export default Login;

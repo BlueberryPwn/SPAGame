@@ -13,5 +13,6 @@ namespace SPAGame.Data
 
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Game>  Games { get; set; }
+        public DbSet<Profile> Profiles { get; set; }
     }
 }

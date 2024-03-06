@@ -23,12 +23,12 @@ namespace SPAGame.Repositories
 
         public Account GetByEmail(string? AccountEmail)
         {
-            return _dbContext.Accounts.First(a => a.AccountEmail == AccountEmail);
+            return _dbContext.Accounts.FirstOrDefault(a => a.AccountEmail == AccountEmail);
         }
 
         public Account GetById(int AccountId)
         {
-            return _dbContext.Accounts.First(a => a.AccountId == AccountId);
+            return _dbContext.Accounts.FirstOrDefault(a => a.AccountId == AccountId);
         }
     }
 }
