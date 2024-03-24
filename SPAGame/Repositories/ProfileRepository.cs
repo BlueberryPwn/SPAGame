@@ -15,37 +15,23 @@ namespace SPAGame.Repositories
             _dbContext = dbContext;
         }
 
-        /*public async Task<Profile> GetByAccountIdAsync(int AccountId)
-        {
-            return await _dbContext.Profiles.FirstOrDefaultAsync(x => x.AccountId == AccountId);
-        }*/
-
-        /*public Profile GetProfileById(int AccountId)
+        public int GetAccountId(int AccountId)
         {
             var profile = _dbContext.Profiles
                 .Where(p => p.AccountId == AccountId)
-                .Select(p => new
-                {
-                    p.GamesCompleted,
-                    p.GamesWon,
-                    p.GamesLost,
-                })
-                .ToList();
+                .Select(p => p.AccountId)
+                .FirstOrDefault();
 
-            return GetProfileById(AccountId);
-        }*/
+            return profile;
+        }
 
-        public Profile GetProfileById(int AccountId)
+        public Profile GetProfileData(int AccountId)
         {
-            var profile = from Profile in _dbContext.Profiles
-                          select new Profile
-                          {
-                              GamesCompleted = Profile.GamesCompleted,
-                              GamesWon = Profile.GamesWon,
-                              GamesLost = Profile.GamesLost
-                          };
+            var profileData = _dbContext.Profiles
+                .Where(p => p.AccountId == AccountId)
+                .FirstOrDefault();
 
-            return profile.FirstOrDefault();
+            return profileData;
         }
     }
 }

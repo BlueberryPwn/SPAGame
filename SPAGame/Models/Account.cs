@@ -17,5 +17,7 @@ namespace SPAGame.Models
         [JsonIgnore]
         [StringLength(100)]
         public string? AccountPassword { get; set; }
+
+        public Profile? Profile { get; set; }
     }
 }

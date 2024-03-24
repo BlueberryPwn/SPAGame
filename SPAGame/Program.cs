@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SPAGame.Data;
 using SPAGame.Repositories;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +11,10 @@ builder.Services.AddCors();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddControllers();
+builder.Services.AddControllers() // builder.Services.AddControllers();
+    .AddJsonOptions(o => o.JsonSerializerOptions
+        .ReferenceHandler = ReferenceHandler.Preserve);
+
 
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IProfileRepository, ProfileRepository>();

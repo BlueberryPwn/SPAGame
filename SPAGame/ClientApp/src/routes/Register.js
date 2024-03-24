@@ -1,12 +1,12 @@
-import AuthContext from "../context/AuthContext";
+import * as yup from "yup";
+import { AuthContext } from "../context/AuthContext";
+import axios from "../lib/axios";
 import { Button, Label, TextInput } from "flowbite-react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useContext, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import axios from "../lib/axios";
-import * as yup from "yup";
 
 const validationSchema = yup.object().shape({
   AccountName: yup
@@ -35,11 +35,11 @@ const validationSchema = yup.object().shape({
 });
 
 const Register = () => {
+  const { authToken } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [AccountName, setAccountName] = useState("");
   const [AccountEmail, setAccountEmail] = useState("");
   const [AccountPassword, setAccountPassword] = useState("");
-
-  const { authToken } = useContext(AuthContext);
 
   const account = { AccountName, AccountEmail, AccountPassword };
 
@@ -66,18 +66,18 @@ const Register = () => {
         account
       );
       console.log(response);
+      navigate("/login", { replace: true });
       toast.success("Account registered successfully.", {
         position: "bottom-right",
       });
-      <Navigate to="/login" />;
     } catch (error) {
       if (error.response.status === 400) {
-        console.log(error);
+        console.error(error);
         toast.info("This name/email address is already in use.", {
           position: "bottom-right",
         });
       } else if (error.response.status === 504) {
-        console.log(error);
+        console.error(error);
         toast.error("ERROR: There is no connection to the server.", {
           position: "bottom-right",
         });
@@ -85,7 +85,7 @@ const Register = () => {
     }
   };
 
-  if (authToken) return <Navigate to="/" />;
+  if (authToken) return <Navigate to="/" replace={true} />;
 
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center bg-gradient-to-br from-cyan-500">

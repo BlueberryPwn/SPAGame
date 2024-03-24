@@ -8,7 +8,7 @@ const target = env.ASPNETCORE_HTTPS_PORT
   : "http://localhost:3992";
 
 // Add your controllers here
-const context = ["/auth"];
+const context = ["/account", "/auth"];
 
 module.exports = function (app) {
   const appProxy = createProxyMiddleware(context, {

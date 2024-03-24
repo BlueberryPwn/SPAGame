@@ -7,20 +7,24 @@ function Profile() {
   const [profileData, setProfileData] = useState(null);
 
   useEffect(() => {
+    // fixa så att den tar in profile med hjälp av en process som checkar profile
+    // t.ex. med hjälp av en till context med useEffect
+    // frivilligt: fixa så att listan visuellt laddar medan den tar in data
+    // exempel: https://stevekinney.github.io/react-and-typescript/use-state-no-default-value
     try {
       const fetchData = async () => {
         const response = await axios.get(
-          "https://localhost:44487/profile/page"
+          "https://localhost:44487/account/page"
         );
         console.log(response);
         setProfileData(response.data);
       };
       fetchData();
     } catch (error) {
-      console.log(error);
+      console.error(error);
       setError(error);
     }
-  }, [error]);
+  }, []);
 
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center bg-gradient-to-br from-cyan-500">
@@ -29,9 +33,11 @@ function Profile() {
           Profile
         </h2>
         <List unstyled>
-          <List.Item>Games completed: {profileData.GamesCompleted}</List.Item>
-          <List.Item>Games won: {profileData.GamesWon}</List.Item>
-          <List.Item>Games lost: {profileData.GamesLost}</List.Item>
+          <List.Item>
+            Games completed: {/*profileData.GamesCompleted*/}
+          </List.Item>
+          <List.Item>Games won: {/*profileData.GamesWon*/}</List.Item>
+          <List.Item>Games lost: {/*profileData.GamesLost*/}</List.Item>
         </List>
       </div>
     </div>

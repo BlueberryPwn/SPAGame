@@ -1,13 +1,14 @@
-import AuthContext from "../context/AuthContext";
+import * as yup from "yup";
+import { AuthContext } from "../context/AuthContext";
+import axios from "../lib/axios";
 import { Button, Label, TextInput } from "flowbite-react";
 import Cookies from "js-cookie";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+//import { ProfileContext } from "../context/ProfileContext";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useContext, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import axios from "../lib/axios";
-import * as yup from "yup";
 
 const validationSchema = yup.object().shape({
   AccountEmail: yup
@@ -25,11 +26,13 @@ const validationSchema = yup.object().shape({
     .required("Please enter your password."),
 });
 
-const Login = () => {
+export const Login = () => {
+  const { authToken, setAuthToken } = useContext(AuthContext);
+  const navigate = useNavigate();
+  //const { profile, setProfile } = useContext(ProfileContext); // profile behöver följa med context för att kunna användas i profile.js
   const [AccountEmail, setAccountEmail] = useState("");
   const [AccountPassword, setAccountPassword] = useState("");
-
-  const { authToken, setAuthToken } = useContext(AuthContext);
+  const [profile, setProfile] = useState(null); // om profile inte deklareras blir det status error vid axios request
 
   const account = { AccountEmail, AccountPassword };
 
@@ -56,17 +59,20 @@ const Login = () => {
       console.log(response);
       const token = Cookies.set("token", "valid");
       setAuthToken(token);
+      const profile = response.data.profile;
+      setProfile(profile);
+      navigate("/", { replace: true });
       toast.success("Logged in successfully.", {
         position: "bottom-right",
       });
     } catch (error) {
       if (error.response.status === 400) {
-        console.log(error);
+        console.error(error);
         toast.info("Invalid details.", {
           position: "bottom-right",
         });
       } else if (error.response.status === 504) {
-        console.log(error);
+        console.error(error);
         toast.error("ERROR: There's no connection to the server.", {
           position: "bottom-right",
         });
@@ -74,7 +80,7 @@ const Login = () => {
     }
   };
 
-  if (authToken) return <Navigate to="/" />;
+  if (authToken) return <Navigate to="/" replace={true} />;
 
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center bg-gradient-to-br from-cyan-500">
@@ -123,4 +129,5 @@ const Login = () => {
     </div>
   );
 };
+
 export default Login;

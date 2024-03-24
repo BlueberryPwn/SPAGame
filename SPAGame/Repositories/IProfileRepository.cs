@@ -4,8 +4,7 @@ namespace SPAGame.Repositories
 {
     public interface IProfileRepository
     {
-        /*Task<Profile> GetByAccountIdAsync(int AccountId);*/
-
-        Profile GetProfileById(int AccountId);
+        int GetAccountId(int AccountId);
+        Profile GetProfileData(int AccountId);
     }
 }
