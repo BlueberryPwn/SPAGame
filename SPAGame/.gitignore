@@ -176,13 +176,7 @@ _pkginfo.txt
 !*.[Cc]ache/
 
 # Others
-AuthController.cs
 ClientBin/
-ITokenRepository.cs
-launchSettings.json
-LoginDto.cs
-RegisterDto.cs
-TokenRepository.cs
 ~$*
 *~
 *.dbmdl

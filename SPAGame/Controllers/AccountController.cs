@@ -20,7 +20,7 @@ namespace SPAGame.Controllers
             _profileRepository = profileRepository;
         }
 
-        [HttpGet("page")]
+        [HttpGet("profile")]
         public IActionResult Page(Profile profileDto)
             // Med hjälp av AccountId ska denna endpoint
             // skicka all profildata till frontend

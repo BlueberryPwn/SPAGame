@@ -26,6 +26,11 @@ namespace SPAGame.Repositories
         }
 
         public Profile GetProfileData(int AccountId)
+            // När du ska uppdatera den här repot
+            // till att inte längre behöva Profiles
+            // och lägger in allt därifrån inuti Accounts
+            // så behöver du lägga till .Select
+            // som bara selectar GamesCompleted,Lost,Won
         {
             var profileData = _dbContext.Profiles
                 .Where(p => p.AccountId == AccountId)

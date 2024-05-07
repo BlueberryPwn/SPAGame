@@ -13,6 +13,6 @@ namespace SPAGame.Models
 
         [ForeignKey("Account")]
         public int AccountId { get; set; }
-        public virtual Account? Account { get; set; }
+        public Account? Account { get; set; }
     }
 }
