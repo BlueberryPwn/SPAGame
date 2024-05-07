@@ -16,7 +16,7 @@ namespace SPAGame.Repositories
         public Account Create(Account account)
         {
             _dbContext.Accounts.Add(account);
-            account.AccountId = _dbContext.SaveChanges();
+            _dbContext.SaveChanges();
 
             return account;
         }

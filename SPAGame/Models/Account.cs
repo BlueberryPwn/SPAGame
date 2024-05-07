@@ -18,6 +18,10 @@ namespace SPAGame.Models
         [StringLength(100)]
         public string? AccountPassword { get; set; }
 
-        public Profile? Profile { get; set; }
+        public int GamesCompleted { get; set; }
+        public int GamesWon { get; set; }
+        public int GamesLost { get; set; }
+
+        //public Profile? Profile { get; set; }
     }
 }

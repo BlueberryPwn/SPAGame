@@ -19,5 +19,12 @@ namespace SPAGame.Models.DTOs
         [MinLength(6, ErrorMessage = "Your password has to contain at least 6 characters.")]
         [MaxLength(30, ErrorMessage = "Your password cannot contain more than 30 characters.")]
         public string? AccountPassword { get; set; }
+
+        [Required]
+        public int GamesCompleted { get; } = 0;
+        [Required]
+        public int GamesLost { get; } = 0;
+        [Required]
+        public int GamesWon { get; } = 0;
     }
 }
