@@ -14,7 +14,7 @@ function Profile() {
     try {
       const fetchData = async () => {
         const response = await axios.get(
-          "https://localhost:44487/account/page"
+          "https://localhost:44487/account/profile"
         );
         console.log(response);
         setProfileData(response.data);

@@ -23,7 +23,7 @@ function App() {
         <Route element={<Register />} path="/register" />
         <Route element={<ProtectedRoutes />}>
           <Route element={<Highscores />} path="/highscores" />
-          <Route element={<Profile />} path="/page" />
+          <Route element={<Profile />} path="/profile" />
         </Route>
         <Route element={<PageNotFound />} path="*" />
       </Routes>

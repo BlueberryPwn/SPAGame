@@ -15,7 +15,7 @@ export const Nav = () => {
     try {
       const response = await axios.post("https://localhost:44487/auth/logout");
       console.log(response);
-      Cookies.remove("token");
+      localStorage.removeItem("token");
       setAuthToken(null);
       <Navigate to="/login" replace={true} />;
       toast.success("Logged out successfully.", {
@@ -36,7 +36,7 @@ export const Nav = () => {
       </Navbar.Brand>
       <Navbar.Collapse>
         <Navbar.Link href="/highscores">Highscores</Navbar.Link>
-        <Navbar.Link href="/page">Profile</Navbar.Link>
+        <Navbar.Link href="/profile">Profile</Navbar.Link>
       </Navbar.Collapse>
       <div className="flex md:order-2">
         <Dropdown
@@ -52,7 +52,7 @@ export const Nav = () => {
             />
           }
         >
-          <Dropdown.Item href="/page">Profile</Dropdown.Item>
+          <Dropdown.Item href="/profile">Profile</Dropdown.Item>
           <Dropdown.Divider />
           <Dropdown.Item onClick={Logout}>Logout</Dropdown.Item>
         </Dropdown>

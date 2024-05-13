@@ -4,7 +4,6 @@ import axios from "../lib/axios";
 import { Button, Label, TextInput } from "flowbite-react";
 import Cookies from "js-cookie";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-//import { ProfileContext } from "../context/ProfileContext";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useContext, useState } from "react";
@@ -29,10 +28,8 @@ const validationSchema = yup.object().shape({
 export const Login = () => {
   const { authToken, setAuthToken } = useContext(AuthContext);
   const navigate = useNavigate();
-  //const { profile, setProfile } = useContext(ProfileContext); // profile behöver följa med context för att kunna användas i profile.js
   const [AccountEmail, setAccountEmail] = useState("");
   const [AccountPassword, setAccountPassword] = useState("");
-  const [profile, setProfile] = useState(null); // om profile inte deklareras blir det status error vid axios request
 
   const account = { AccountEmail, AccountPassword };
 
@@ -57,10 +54,9 @@ export const Login = () => {
         account
       );
       console.log(response);
-      const token = Cookies.set("token", "valid");
+      const token = response.data.jwt;
+      localStorage.setItem("token", token);
       setAuthToken(token);
-      const profile = response.data.profile;
-      setProfile(profile);
       navigate("/", { replace: true });
       toast.success("Logged in successfully.", {
         position: "bottom-right",

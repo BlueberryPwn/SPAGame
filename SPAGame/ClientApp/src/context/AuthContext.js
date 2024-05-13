@@ -1,4 +1,3 @@
-import Cookies from "js-cookie";
 import React, { createContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext({ authToken: null });
@@ -10,7 +9,8 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const checkAuthToken = () => {
-      const token = Cookies.get("token");
+      // Retrieve the token from local storage
+      const token = localStorage.getItem("token");
       if (token) setAuthToken(token);
     };
 
