@@ -3,17 +3,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SPAGame.Models
 {
-    public class Game
+    public class Profile
     {
         [Key]
-        public int GameId { get; set; }
-        public string? GameWord { get; set; }
-        public int GameAttempts { get; set; }
-        public bool GameActive { get; set; }
-        public DateTime GameDate { get; set; } = DateTime.Now;
+        public int AccountProfileId { get; set; }
+        public int GamesPlayed { get; set; }
+        public int GamesWon { get; set; }
+        public int GamesLost { get; set; }
         public int AccountId { get; set; }
 
         [ForeignKey("AccountId")]
         public Account Account { get; set; }
+
     }
 }

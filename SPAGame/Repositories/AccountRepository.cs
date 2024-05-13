@@ -13,12 +13,12 @@ namespace SPAGame.Repositories
             _dbContext = dbContext;
         }
 
-        public Account Create(Account account)
+        public Account AddAccount(Account _account)
         {
-            _dbContext.Accounts.Add(account);
+            _dbContext.Accounts.Add(_account);
             _dbContext.SaveChanges();
 
-            return account;
+            return _account;
         }
 
         //Skriv kod som skapar en ny rad inuti Profiles i databasen

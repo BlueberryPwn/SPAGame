@@ -12,43 +12,69 @@ namespace SPAGame.Controllers
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly IAccountRepository _accountRepository;
+        private readonly IHighscoreRepository _highscoreRepository;
+        private readonly IProfileRepository _profileRepository;
         private readonly ITokenRepository _tokenRepository;
 
-        public AuthController(ApplicationDbContext applicationDbContext, IAccountRepository accountRepository, ITokenRepository tokenRepository)
+        public AuthController(ApplicationDbContext applicationDbContext, IAccountRepository accountRepository, IHighscoreRepository highscoreRepository, IProfileRepository profileRepository, ITokenRepository tokenRepository)
         {
             _dbContext = applicationDbContext;
             _accountRepository = accountRepository;
+            _highscoreRepository = highscoreRepository;
+            _profileRepository = profileRepository;
             _tokenRepository = tokenRepository;
         }
 
         [HttpPost("register")]
-        public IActionResult Register(RegisterDto registerDto)
+        public IActionResult Register(RegisterDto dto)
         {
             var _account = new Account
             {
-                AccountName = registerDto.AccountName,
-                AccountEmail = registerDto.AccountEmail,
-                AccountPassword = BCrypt.Net.BCrypt.HashPassword(registerDto.AccountPassword),
-                GamesCompleted = registerDto.GamesCompleted,
-                GamesLost = registerDto.GamesLost,
-                GamesWon = registerDto.GamesWon
+                AccountName = dto.AccountName,
+                AccountEmail = dto.AccountEmail,
+                AccountPassword = BCrypt.Net.BCrypt.HashPassword(dto.AccountPassword)
             };
 
             var existingName = _dbContext.Accounts.FirstOrDefault(a => a.AccountName == _account.AccountName);
 
             if (existingName != null)
             {
-                return BadRequest(new { response = "This name is already in use." });
+                return BadRequest(new { response = "This name is taken." });
             }
 
             var existingEmail = _dbContext.Accounts.FirstOrDefault(a => a.AccountEmail == _account.AccountEmail);
 
             if (existingEmail != null)
             {
-                return BadRequest(new { response = "This email address is already in use." });
+                return BadRequest(new { response = "This email address is taken." });
             }
 
-            return Created("The account has been registered successfully.", _accountRepository.Create(_account));
+            // Adds new account to the database
+            _accountRepository.AddAccount(_account);
+
+            var accountId = _account.AccountId;
+
+            var _highscore = new Highscore
+            {
+                AccountId = accountId,
+                Score = dto.Score
+            };
+
+            // Gives default score connected to the new account
+            _highscoreRepository.AddHighscore(_highscore);
+
+            var _profile = new Profile
+            {
+                AccountId = accountId,
+                GamesPlayed = dto.GamesPlayed,
+                GamesWon = dto.GamesWon,
+                GamesLost = dto.GamesLost
+            };
+
+            // Gives default profile data connected to the new account
+            _profileRepository.AddProfile(_profile);
+
+            return Ok(new { response = "The account has been registered successfully." });
         }
 
         [HttpPost("login")]

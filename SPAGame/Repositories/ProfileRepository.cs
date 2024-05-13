@@ -5,5 +5,19 @@ namespace SPAGame.Repositories
 {
     public class ProfileRepository : IProfileRepository
     {
+        private readonly ApplicationDbContext _dbContext;
+
+        public ProfileRepository(ApplicationDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
+        public Profile AddProfile(Profile _profile)
+        {
+            _dbContext.Profiles.Add(_profile);
+            _dbContext.SaveChanges();
+
+            return _profile;
+        }
     }
 }

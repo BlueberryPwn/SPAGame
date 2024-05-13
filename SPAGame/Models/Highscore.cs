@@ -3,14 +3,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SPAGame.Models
 {
-    public class Game
+    public class Highscore
     {
         [Key]
-        public int GameId { get; set; }
-        public string? GameWord { get; set; }
-        public int GameAttempts { get; set; }
-        public bool GameActive { get; set; }
-        public DateTime GameDate { get; set; } = DateTime.Now;
+        public int HighscoreId { get; set; }
+        public int Score { get; set; }
         public int AccountId { get; set; }
 
         [ForeignKey("AccountId")]

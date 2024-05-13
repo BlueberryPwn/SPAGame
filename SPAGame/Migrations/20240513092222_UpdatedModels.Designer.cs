@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SPAGame.Data;
 
@@ -11,9 +12,11 @@ using SPAGame.Data;
 namespace SPAGame.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240513092222_UpdatedModels")]
+    partial class UpdatedModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,77 +80,7 @@ namespace SPAGame.Migrations
                     b.ToTable("Games");
                 });
 
-            modelBuilder.Entity("SPAGame.Models.Highscore", b =>
-                {
-                    b.Property<int>("HighscoreId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HighscoreId"));
-
-                    b.Property<int>("AccountId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Score")
-                        .HasColumnType("int");
-
-                    b.HasKey("HighscoreId");
-
-                    b.HasIndex("AccountId");
-
-                    b.ToTable("HighScores");
-                });
-
-            modelBuilder.Entity("SPAGame.Models.Profile", b =>
-                {
-                    b.Property<int>("AccountProfileId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AccountProfileId"));
-
-                    b.Property<int>("AccountId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GamesLost")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GamesPlayed")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GamesWon")
-                        .HasColumnType("int");
-
-                    b.HasKey("AccountProfileId");
-
-                    b.HasIndex("AccountId");
-
-                    b.ToTable("Profiles");
-                });
-
             modelBuilder.Entity("SPAGame.Models.Game", b =>
-                {
-                    b.HasOne("SPAGame.Models.Account", "Account")
-                        .WithMany()
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-                });
-
-            modelBuilder.Entity("SPAGame.Models.Highscore", b =>
-                {
-                    b.HasOne("SPAGame.Models.Account", "Account")
-                        .WithMany()
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-                });
-
-            modelBuilder.Entity("SPAGame.Models.Profile", b =>
                 {
                     b.HasOne("SPAGame.Models.Account", "Account")
                         .WithMany()
