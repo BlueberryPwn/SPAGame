@@ -8,36 +8,35 @@ using SPAGame.Repositories;
 
 namespace SPAGame.Controllers
 {
-    [Route("profile")]
+    [Route("account")]
     [ApiController]
-    public class ProfileController : ControllerBase
+    public class AccountController : ControllerBase
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly IHighscoreRepository _highscoreRepository;
         private readonly IProfileRepository _profileRepository;
 
-        public ProfileController(ApplicationDbContext applicationDbContext, IHighscoreRepository highscoreRepository, IProfileRepository profileRepository)
+        public AccountController(ApplicationDbContext applicationDbContext, IHighscoreRepository highscoreRepository, IProfileRepository profileRepository)
         {
             _dbContext = applicationDbContext;
             _highscoreRepository = highscoreRepository;
             _profileRepository = profileRepository;
         }
 
-        [HttpGet("{AccountId}")]
-        public IActionResult GetProfileData(int AccountId)
+        [HttpGet("profile")]
+        public IActionResult Profile(int AccountId)
         {
             var profile = _profileRepository.GetProfileByAccountId(AccountId);
 
             if (profile == null)
             {
-                return NotFound(new { response = "This profile could not be found." });
+                return NotFound(new { response = "The profile could not be found." });
             }
 
-            var highscore = _highscoreRepository.GetHighscoreByAccountId(AccountId);
+            _highscoreRepository.GetHighscoreByAccountId(AccountId);
 
             var profileDto = new ProfileDto
             {
-                Score = highscore.Sum(h =>  h.Score),
                 GamesPlayed = profile.GamesPlayed,
                 GamesWon = profile.GamesWon,
                 GamesLost = profile.GamesLost

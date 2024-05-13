@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
     const checkAuthToken = () => {
       // Retrieve the token from local storage
       const token = localStorage.getItem("token");
-      if (token) setAuthToken(token);
+      setAuthToken(token);
     };
 
     checkAuthToken();

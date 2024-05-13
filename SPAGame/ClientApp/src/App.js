@@ -14,21 +14,23 @@ import Register from "./routes/Register";
 
 function App() {
   return (
-    <Router>
-      <Nav />
-      <ToastContainer />
-      <Routes>
-        <Route element={<Home />} path="/" exact />
-        <Route element={<Login />} path="/login" />
-        <Route element={<Register />} path="/register" />
-        <Route element={<ProtectedRoutes />}>
-          <Route element={<Highscores />} path="/highscores" />
-          <Route element={<Profile />} path="/profile" />
-        </Route>
-        <Route element={<PageNotFound />} path="*" />
-      </Routes>
-      <Foot />
-    </Router>
+    <div>
+      <Router>
+        <Nav />
+        <ToastContainer />
+        <Routes>
+          <Route element={<Home />} path="/" exact />
+          <Route element={<Login />} path="/login" />
+          <Route element={<Register />} path="/register" />
+          <Route element={<ProtectedRoutes />}>
+            <Route element={<Highscores />} path="/highscores" />
+            <Route element={<Profile />} path="/profile" />
+          </Route>
+          <Route element={<PageNotFound />} path="*" />
+        </Routes>
+        <Foot />
+      </Router>
+    </div>
   );
 }
 

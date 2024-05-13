@@ -1,17 +1,48 @@
 import { AuthContext } from "../context/AuthContext";
-import React, { useContext, useEffect } from "react";
+import { Spinner } from "flowbite-react";
+import React, { useContext, useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
 const ProtectedRoutes = () => {
   const navigate = useNavigate();
   const { authToken, setAuthToken } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(true);
+  const [shouldNavigate, setShouldNavigate] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    setAuthToken(token);
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        setAuthToken(token);
+        if (!token) {
+          setShouldNavigate(true);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 500);
+      }
+    };
+
+    fetchData();
   }, [setAuthToken]);
 
-  return authToken ? <Outlet /> : navigate("/login", { replace: true });
+  if (shouldNavigate) {
+    navigate("/login", { replace: true });
+    return null; // Prevent rendering other content
+  }
+
+  return isLoading ? (
+    <div className="flex h-screen w-screen flex-col items-center justify-center bg-gradient-to-br from-cyan-500">
+      {/*<div className="text-center">
+        <Spinner aria-label="Loading" />
+      </div>*/}
+    </div>
+  ) : (
+    <Outlet />
+  );
 };
 
 export default ProtectedRoutes;

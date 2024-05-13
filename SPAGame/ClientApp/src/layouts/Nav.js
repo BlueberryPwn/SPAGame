@@ -2,13 +2,14 @@ import { AuthContext } from "../context/AuthContext";
 import { Avatar, Dropdown, Navbar } from "flowbite-react";
 import axios from "../lib/axios";
 import Home from "../assets/home.png";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import React, { useContext } from "react";
 import { toast } from "react-toastify";
 import User from "../assets/user.png";
 
 export const Nav = () => {
   const { authToken, setAuthToken } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const Logout = async () => {
     try {
@@ -16,7 +17,7 @@ export const Nav = () => {
       console.log(response);
       localStorage.removeItem("token");
       setAuthToken(null);
-      <Navigate to="/login" replace={true} />;
+      navigate("/login", { replace: true });
       toast.success("Logged out successfully.", {
         position: "bottom-right",
       });
