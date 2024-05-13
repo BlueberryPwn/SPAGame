@@ -19,5 +19,16 @@ namespace SPAGame.Repositories
 
             return _profile;
         }
+
+        public Profile GetById(int ProfileId)
+        {
+            return _dbContext.Profiles.Find(ProfileId);
+        }
+
+        public Profile GetProfileByAccountId(int AccountId)
+        {
+            return _dbContext.Profiles
+                .FirstOrDefault(p => p.AccountId == AccountId);
+        }
     }
 }

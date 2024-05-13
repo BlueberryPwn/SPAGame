@@ -19,5 +19,17 @@ namespace SPAGame.Repositories
 
             return _highscore;
         }
+
+        public Highscore GetById(int HighscoreId)
+        {
+            return _dbContext.HighScores.Find(HighscoreId);
+        }
+
+        public List<Highscore> GetHighscoreByAccountId(int AccountId)
+        {
+            return _dbContext.HighScores
+                .Where(h => h.AccountId == AccountId)
+                .ToList();
+        }
     }
 }
