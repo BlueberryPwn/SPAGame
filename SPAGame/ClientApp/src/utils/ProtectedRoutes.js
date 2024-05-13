@@ -1,5 +1,4 @@
 import { AuthContext } from "../context/AuthContext";
-import Cookies from "js-cookie";
 import React, { useContext, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
@@ -8,7 +7,7 @@ const ProtectedRoutes = () => {
   const { authToken, setAuthToken } = useContext(AuthContext);
 
   useEffect(() => {
-    const token = Cookies.get("token");
+    const token = localStorage.getItem("token");
     setAuthToken(token);
   }, [setAuthToken]);
 
