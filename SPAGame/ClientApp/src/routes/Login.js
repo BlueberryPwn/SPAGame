@@ -2,7 +2,6 @@ import * as yup from "yup";
 import { AuthContext } from "../context/AuthContext";
 import axios from "../lib/axios";
 import { Button, Label, TextInput } from "flowbite-react";
-import Cookies from "js-cookie";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";

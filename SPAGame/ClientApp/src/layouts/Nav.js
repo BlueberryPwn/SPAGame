@@ -1,7 +1,6 @@
 import { AuthContext } from "../context/AuthContext";
 import { Avatar, Dropdown, Navbar } from "flowbite-react";
 import axios from "../lib/axios";
-import Cookies from "js-cookie";
 import Home from "../assets/home.png";
 import { Navigate } from "react-router-dom";
 import React, { useContext } from "react";
