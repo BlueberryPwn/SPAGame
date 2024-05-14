@@ -13,7 +13,7 @@ namespace SPAGame.Repositories
             _dbContext = dbContext;
         }
 
-        public Account AddAccount(Account _account)
+        public AccountModel AddAccount(AccountModel _account)
         {
             _dbContext.Accounts.Add(_account);
             _dbContext.SaveChanges();
@@ -24,12 +24,12 @@ namespace SPAGame.Repositories
         //Skriv kod som skapar en ny rad inuti Profiles i databasen
         //när kontot skapas, t.ex. med hjälp av Profiles.
 
-        public Account GetByEmail(string? AccountEmail)
+        public AccountModel GetByEmail(string? AccountEmail)
         {
             return _dbContext.Accounts.FirstOrDefault(a => a.AccountEmail == AccountEmail);
         }
 
-        public Account GetById(int AccountId)
+        public AccountModel GetById(int AccountId)
         {
             return _dbContext.Accounts.FirstOrDefault(a => a.AccountId == AccountId);
         }

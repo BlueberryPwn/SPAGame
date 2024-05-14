@@ -1,11 +1,14 @@
 ﻿using SPAGame.Models;
+using SPAGame.Models.DTOs;
 
 namespace SPAGame.Repositories
 {
     public interface IHighscoreRepository
     {
-        Highscore AddHighscore(Highscore highscore);
-        Highscore GetById(int HighscoreId);
-        List<Highscore> GetHighscoreByAccountId(int AccountId);
+        HighscoreModel AddHighscore(HighscoreModel highscore);
+        HighscoreModel GetById(int HighscoreId);
+        List<HighscoreModel> GetHighscoreByAccountId(int AccountId);
+        List<HighscoreDto> GetHighscoresForToday(int count);
+        List<HighscoreDto> GetHighscoresForAllTime(int count);
     }
 }

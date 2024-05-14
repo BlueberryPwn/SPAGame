@@ -4,8 +4,8 @@ namespace SPAGame.Repositories
 {
     public interface IProfileRepository
     {
-        Profile AddProfile(Profile profile);
-        Profile GetById(int ProfileId);
-        Profile GetProfileByAccountId(int ProfileId);
+        ProfileModel AddProfile(ProfileModel profile);
+        ProfileModel GetById(int ProfileId);
+        ProfileModel GetProfileByAccountId(int ProfileId);
     }
 }

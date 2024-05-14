@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace SPAGame.Models
 {
-    public class Account
+    public class AccountModel
     {
         [Key]
         public int AccountId { get; set; }

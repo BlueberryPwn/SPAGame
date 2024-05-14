@@ -12,7 +12,7 @@ namespace SPAGame.Repositories
             _dbContext = dbContext;
         }
 
-        public Profile AddProfile(Profile _profile)
+        public ProfileModel AddProfile(ProfileModel _profile)
         {
             _dbContext.Profiles.Add(_profile);
             _dbContext.SaveChanges();
@@ -20,12 +20,12 @@ namespace SPAGame.Repositories
             return _profile;
         }
 
-        public Profile GetById(int ProfileId)
+        public ProfileModel GetById(int ProfileId)
         {
             return _dbContext.Profiles.Find(ProfileId);
         }
 
-        public Profile GetProfileByAccountId(int AccountId)
+        public ProfileModel GetProfileByAccountId(int AccountId)
         {
             return _dbContext.Profiles
                 .FirstOrDefault(p => p.AccountId == AccountId);

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SPAGame.Models
 {
-    public class Profile
+    public class ProfileModel
     {
         [Key]
         public int AccountProfileId { get; set; }
@@ -13,7 +13,7 @@ namespace SPAGame.Models
         public int AccountId { get; set; }
 
         [ForeignKey("AccountId")]
-        public Account Account { get; set; }
+        public AccountModel Account { get; set; }
 
     }
 }

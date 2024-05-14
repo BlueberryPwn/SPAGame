@@ -11,9 +11,9 @@ namespace SPAGame.Data
 
         }
 
-        public DbSet<Account> Accounts { get; set; }
-        public DbSet<Game>  Games { get; set; }
-        public DbSet<Highscore> HighScores { get; set; }
-        public DbSet<Profile> Profiles { get; set; }
+        public DbSet<AccountModel> Accounts { get; set; }
+        public DbSet<GameModel>  Games { get; set; }
+        public DbSet<HighscoreModel> Highscores { get; set; }
+        public DbSet<ProfileModel> Profiles { get; set; }
     }
 }

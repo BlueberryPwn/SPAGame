@@ -4,8 +4,8 @@ namespace SPAGame.Repositories
 {
     public interface IAccountRepository
     {
-        Account AddAccount(Account account);
-        Account GetByEmail(string? AccountEmail);
-        Account GetById(int AccountId);
+        AccountModel AddAccount(AccountModel account);
+        AccountModel GetByEmail(string? AccountEmail);
+        AccountModel GetById(int AccountId);
     }
 }

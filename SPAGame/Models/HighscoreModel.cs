@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SPAGame.Models
 {
-    public class Highscore
+    public class HighscoreModel
     {
         [Key]
         public int HighscoreId { get; set; }
@@ -11,6 +11,6 @@ namespace SPAGame.Models
         public int AccountId { get; set; }
 
         [ForeignKey("AccountId")]
-        public Account Account { get; set; }
+        public AccountModel Account { get; set; }
     }
 }

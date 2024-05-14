@@ -28,7 +28,7 @@ namespace SPAGame.Controllers
         [HttpPost("register")]
         public IActionResult Register(RegisterDto dto)
         {
-            var _account = new Account
+            var _account = new AccountModel
             {
                 AccountName = dto.AccountName,
                 AccountEmail = dto.AccountEmail,
@@ -54,7 +54,7 @@ namespace SPAGame.Controllers
 
             var accountId = _account.AccountId;
 
-            var _highscore = new Highscore
+            var _highscore = new HighscoreModel
             {
                 AccountId = accountId,
                 Score = dto.Score
@@ -63,7 +63,7 @@ namespace SPAGame.Controllers
             // Gives default score connected to the new account
             _highscoreRepository.AddHighscore(_highscore);
 
-            var _profile = new Profile
+            var _profile = new ProfileModel
             {
                 AccountId = accountId,
                 GamesPlayed = dto.GamesPlayed,

@@ -4,7 +4,7 @@ namespace SPAGame.Repositories
 {
     public interface ITokenRepository
     {
-        string CreateToken(Account account);
+        string CreateToken(AccountModel account);
         //public JwtSecurityToken VerifyToken(string? jwt);
     }
 }

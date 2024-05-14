@@ -17,7 +17,7 @@ namespace SPAGame.Repositories
             _configuration = configuration;
         }
 
-        public string CreateToken(Account account)
+        public string CreateToken(AccountModel account)
         {
             List<Claim> claims = new List<Claim>
             {
