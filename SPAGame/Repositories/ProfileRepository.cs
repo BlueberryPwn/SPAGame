@@ -12,12 +12,12 @@ namespace SPAGame.Repositories
             _dbContext = dbContext;
         }
 
-        public ProfileModel AddProfile(ProfileModel _profile)
+        public ProfileModel AddProfile(ProfileModel profile)
         {
-            _dbContext.Profiles.Add(_profile);
+            _dbContext.Profiles.Add(profile);
             _dbContext.SaveChanges();
 
-            return _profile;
+            return profile;
         }
 
         public ProfileModel GetById(int ProfileId)

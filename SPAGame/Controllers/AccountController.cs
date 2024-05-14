@@ -1,14 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Client;
+﻿using Microsoft.AspNetCore.Mvc;
 using SPAGame.Data;
-using SPAGame.Models;
 using SPAGame.Models.DTOs;
 using SPAGame.Repositories;
 
 namespace SPAGame.Controllers
 {
-    [Route("account")]
+    [Route("[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
     {
@@ -24,7 +21,7 @@ namespace SPAGame.Controllers
         }
 
         [HttpGet("profile")]
-        public IActionResult Profile(int AccountId)
+        public IActionResult Account(int AccountId)
         {
             var profile = _profileRepository.GetProfileByAccountId(AccountId);
 

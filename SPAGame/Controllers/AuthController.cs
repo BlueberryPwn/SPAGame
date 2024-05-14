@@ -6,7 +6,7 @@ using SPAGame.Repositories;
 
 namespace SPAGame.Controllers
 {
-    [Route("auth")]
+    [Route("[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
     {

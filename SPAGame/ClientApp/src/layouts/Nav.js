@@ -13,7 +13,7 @@ export const Nav = () => {
 
   const Logout = async () => {
     try {
-      const response = await axios.post("https://localhost:44487/auth/logout");
+      const response = await axios.post("https://localhost:44487/Auth/logout");
       console.log(response);
       localStorage.removeItem("token");
       setAuthToken(null);
@@ -35,7 +35,7 @@ export const Nav = () => {
         <img src={Home} className="h-5" alt="Home" />
       </Navbar.Brand>
       <Navbar.Collapse>
-        <Navbar.Link href="/highscores">Highscores</Navbar.Link>
+        <Navbar.Link href="/highscore">Highscore</Navbar.Link>
         <Navbar.Link href="/profile">Profile</Navbar.Link>
       </Navbar.Collapse>
       <div className="flex md:order-2">
@@ -44,7 +44,7 @@ export const Nav = () => {
           inline
           label={
             <Avatar
-              className="h-5" // hidden md:flex
+              className="h-5"
               alt="User settings"
               img={User}
               rounded

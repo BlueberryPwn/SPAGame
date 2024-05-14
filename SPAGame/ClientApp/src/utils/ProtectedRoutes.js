@@ -20,9 +20,7 @@ const ProtectedRoutes = () => {
       } catch (error) {
         console.error(error);
       } finally {
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 500);
+        setIsLoading(false);
       }
     };
 
@@ -31,7 +29,7 @@ const ProtectedRoutes = () => {
 
   if (shouldNavigate) {
     navigate("/login", { replace: true });
-    return null; // Prevent rendering other content
+    return null;
   }
 
   return isLoading ? (

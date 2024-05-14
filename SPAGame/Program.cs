@@ -21,6 +21,7 @@ builder.Services.AddControllers() // builder.Services.AddControllers();
         .ReferenceHandler = ReferenceHandler.Preserve);
 
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IGameRepository, GameRepository>();
 builder.Services.AddScoped<IHighscoreRepository, HighscoreRepository>();
 builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();

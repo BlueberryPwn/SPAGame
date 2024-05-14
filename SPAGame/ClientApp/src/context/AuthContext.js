@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const checkAuthToken = () => {
-      // Retrieve the token from local storage
+      // Retrieves the token from local storage
       const token = localStorage.getItem("token");
       setAuthToken(token);
     };

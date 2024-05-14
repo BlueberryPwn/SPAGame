@@ -7,8 +7,9 @@ namespace SPAGame.Repositories
     {
         HighscoreModel AddHighscore(HighscoreModel highscore);
         HighscoreModel GetById(int HighscoreId);
-        List<HighscoreModel> GetHighscoreByAccountId(int AccountId);
-        List<HighscoreDto> GetHighscoresForToday(int count);
-        List<HighscoreDto> GetHighscoresForAllTime(int count);
+        HighscoreModel GetHighscoreByAccountId(int AccountId);
+        //List<HighscoreModel> GetHighscoreByAccountId(int AccountId);
+        List<HighscoreDto> GetHighscoresForToday(int amount);
+        List<HighscoreDto> GetHighscoresForAllTime(int amount);
     }
 }

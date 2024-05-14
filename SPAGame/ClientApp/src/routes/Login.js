@@ -49,7 +49,7 @@ export const Login = () => {
 
     try {
       const response = await axios.post(
-        "https://localhost:44487/auth/login",
+        "https://localhost:44487/Auth/login",
         account
       );
       console.log(response);

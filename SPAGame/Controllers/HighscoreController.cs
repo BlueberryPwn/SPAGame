@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SPAGame.Data;
-using SPAGame.Models.DTOs;
 using SPAGame.Repositories;
 
 namespace SPAGame.Controllers
 {
-    [Route("highscore")]
+    [Route("[controller]")]
     [ApiController]
     public class HighscoreController : ControllerBase
     {
@@ -20,7 +18,7 @@ namespace SPAGame.Controllers
         }
 
         [HttpGet("today")]
-        public IActionResult Today(int count)
+        public IActionResult Today(int amount)
         {
             // Gets top 10 best highscores from today
             var todaysHighscores = _highscoreRepository.GetHighscoresForToday(10);
@@ -29,7 +27,7 @@ namespace SPAGame.Controllers
         }
 
         [HttpGet("alltime")]
-        public IActionResult AllTime(int count)
+        public IActionResult AllTime(int amount)
         {
             // Gets top 10 best highscores of all-time
             var allTimeHighscores = _highscoreRepository.GetHighscoresForAllTime(10);

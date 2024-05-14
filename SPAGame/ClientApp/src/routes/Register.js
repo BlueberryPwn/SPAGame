@@ -62,7 +62,7 @@ const Register = () => {
 
     try {
       const response = await axios.post(
-        "https://localhost:44487/auth/register",
+        "https://localhost:44487/Auth/register",
         account
       );
       console.log(response);

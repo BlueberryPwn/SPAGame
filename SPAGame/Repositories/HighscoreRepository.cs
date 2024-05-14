@@ -13,12 +13,12 @@ namespace SPAGame.Repositories
             _dbContext = dbContext;
         }
 
-        public HighscoreModel AddHighscore(HighscoreModel _highscore)
+        public HighscoreModel AddHighscore(HighscoreModel highscore)
         {
-            _dbContext.Highscores.Add(_highscore);
+            _dbContext.Highscores.Add(highscore);
             _dbContext.SaveChanges();
 
-            return _highscore;
+            return highscore;
         }
 
         public HighscoreModel GetById(int HighscoreId)
@@ -26,27 +26,35 @@ namespace SPAGame.Repositories
             return _dbContext.Highscores.Find(HighscoreId);
         }
 
-        public List<HighscoreModel> GetHighscoreByAccountId(int AccountId)
+        public HighscoreModel GetHighscoreByAccountId(int AccountId)
+        {
+            return _dbContext.Highscores
+                .Where(h => h.AccountId == AccountId)
+                .FirstOrDefault();
+        }
+
+        /*public List<HighscoreModel> GetHighscoreByAccountId(int AccountId)
         {
             return _dbContext.Highscores
                 .Where(h => h.AccountId == AccountId)
                 .ToList();
-        }
+        }*/
 
-        public List<HighscoreDto> GetHighscoresForToday(int count)
+        public List<HighscoreDto> GetHighscoresForToday(int amount)
         {
             var today = DateTime.Today;
 
             var query = _dbContext.Highscores
-                // Joins the Highscores and Games tables
-                // h => h.AccountId is the left navigation property, g => g.AccountId is the right navigation property; both properties are used to join the tables
-                // (h, g) => new { Highscore = h, Game = g } defines an anonymous type that combines data from both joined tables
+                // This query joins the Highscores and Games tables
+                // The h => h.AccountId and g => g.AccountId properties are used for the join
+                // (h, g) => new { Highscore = h, Game = g } combines data from both joined tables
                 .Join(_dbContext.Games, h => h.AccountId, g => g.AccountId, (h, g) => new { Highscore = h, Game = g })
                 .Where(data => data.Game.GameDate.Date == today) // Filters by today's date
                 .OrderByDescending(data => data.Highscore.Score)
-                .Take(count) // Takes a certain amount of players from the database
+                .Take(amount) // Takes a set amount of players from the database
                 .Select(data => new HighscoreDto
                 {
+                    AccountId = data.Highscore.AccountId,
                     AccountName = data.Highscore.Account.AccountName,
                     GameDate = data.Game.GameDate,
                     Score = data.Highscore.Score
@@ -56,13 +64,14 @@ namespace SPAGame.Repositories
             return query;
         }
 
-        public List<HighscoreDto> GetHighscoresForAllTime(int count)
+        public List<HighscoreDto> GetHighscoresForAllTime(int amount)
         {
             var query = _dbContext.Highscores
                 .OrderByDescending(h => h.Score)
-                .Take(count) // Takes a certain amount of players from the database
+                .Take(amount) // Takes a set amount of players from the database
                 .Select(h => new HighscoreDto
                 {
+                    AccountId = h.AccountId,
                     AccountName = h.Account.AccountName,
                     Score = h.Score
                 })
