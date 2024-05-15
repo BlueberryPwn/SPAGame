@@ -25,8 +25,8 @@ namespace SPAGame.Controllers
             _profileRepository = profileRepository;
         }
 
-        [HttpGet("loadgame")]
-        public IActionResult LoadGame(int AccountId)
+        [HttpGet("getgame")]
+        public IActionResult GetGame(int AccountId)
         {
             var account = _accountRepository.GetById(AccountId);
 
@@ -45,8 +45,8 @@ namespace SPAGame.Controllers
             return Ok(game);
         }
 
-        [HttpPost("startgame")]
-        public IActionResult StartGame(int AccountId)
+        [HttpPost("playgame")]
+        public IActionResult PlayGame(int AccountId)
         {
             var existingGame = _gameRepository.GetActiveGameByAccountId(AccountId);
 
@@ -67,8 +67,8 @@ namespace SPAGame.Controllers
             return Ok(game);
         }
 
-        [HttpPost("guess")]
-        public IActionResult Guess(int AccountId, int GameId, int GameGuess)
+        [HttpPost("makeguess")]
+        public IActionResult MakeGuess(int AccountId, int GameId, int GameGuess)
         {
             var game = _gameRepository.GetGameById(GameId);
 
