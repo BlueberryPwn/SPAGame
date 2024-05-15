@@ -25,7 +25,20 @@ namespace SPAGame.Controllers
             _profileRepository = profileRepository;
         }
 
-        [HttpGet("getgame")]
+        [HttpGet("gamestatus")] // Checks if the player has an active game ongoing
+        public IActionResult GameStatus(int AccountId)
+        {
+            var game = _gameRepository.LoadGame(AccountId);
+
+            if (game == null)
+            {
+                return NotFound("The account does not have an active game.");
+            }
+
+            return Ok(game);
+        }
+
+        [HttpGet("getgame")] // Gets the ongoing game's details
         public IActionResult GetGame(int AccountId)
         {
             var account = _accountRepository.GetById(AccountId);
@@ -45,7 +58,7 @@ namespace SPAGame.Controllers
             return Ok(game);
         }
 
-        [HttpPost("playgame")]
+        [HttpPost("playgame")] // Starts a new game for the player
         public IActionResult PlayGame(int AccountId)
         {
             var existingGame = _gameRepository.GetActiveGameByAccountId(AccountId);
@@ -67,7 +80,7 @@ namespace SPAGame.Controllers
             return Ok(game);
         }
 
-        [HttpPost("makeguess")]
+        [HttpPost("makeguess")] // Game returns different results depending on the guess
         public IActionResult MakeGuess(int AccountId, int GameId, int GameGuess)
         {
             var game = _gameRepository.GetGameById(GameId);
@@ -99,7 +112,6 @@ namespace SPAGame.Controllers
             {
                 if (game.GameAttempts == 0)
                 {
-                    //game.GameActive = false;
                     profile.GamesPlayed++;
                     profile.GamesLost++;
                 }
@@ -113,13 +125,10 @@ namespace SPAGame.Controllers
                 }
                 else
                 {
-                    //game.GameActive = false;
                     profile.GamesPlayed++;
                     profile.GamesWon++;
                     highscore.Score++;
                 }
-
-                //_dbContext.SaveChanges(); // Saves initial changes to the database before returning a response
 
                 // Returns different responses depending on the guess
                 if (game.GameAttempts == 0)

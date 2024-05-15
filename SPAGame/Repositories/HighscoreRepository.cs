@@ -38,16 +38,16 @@ namespace SPAGame.Repositories
             var today = DateTime.Today;
 
             var query = _dbContext.Highscores
-                // Joins Highscores with Games using AccountId and creates a new object containing both entities
+                // Joins Highscores with Games using AccountId and creates a new anonymous object containing both entities
                 .Join(_dbContext.Games, h => h.AccountId, g => g.AccountId, (highscore, game) => new { highscore, game })
                 .Where(data => data.game.GameDate.Date == today)
                 .GroupBy(data => data.highscore.AccountId)
                 .Select(group => new HighscoreDto
                 {
-                    AccountId = group.Key, // AccountId is set as the key
-                    AccountName = group.First().highscore.Account.AccountName,
+                    AccountId = group.Key,
+                    AccountName = group.First().highscore.Account.AccountName, // Uses navigation property to access name
                     GameDate = today,
-                    Score = group.Sum(x => x.highscore.Score)
+                    Score = group.Sum(x => x.highscore.Score) // Sums scores from today
                 })
                 .Where(h => h.Score > 0) // Excludes any player with a score of 0
                 .OrderByDescending(data => data.Score)

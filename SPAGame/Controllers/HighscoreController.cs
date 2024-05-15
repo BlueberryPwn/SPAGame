@@ -17,19 +17,17 @@ namespace SPAGame.Controllers
             _highscoreRepository = highscoreRepository;
         }
 
-        [HttpGet("today")]
+        [HttpGet("today")] // Gets top 10 best highscores from today
         public IActionResult Today(int amount)
         {
-            // Gets top 10 best highscores from today
             var todaysHighscores = _highscoreRepository.GetHighscoresForToday(10);
 
             return Ok(todaysHighscores);
         }
 
-        [HttpGet("alltime")]
+        [HttpGet("alltime")] // Gets top 10 best highscores of all-time
         public IActionResult AllTime(int amount)
         {
-            // Gets top 10 best highscores of all-time
             var allTimeHighscores = _highscoreRepository.GetHighscoresForAllTime(10);
 
             return Ok(allTimeHighscores);

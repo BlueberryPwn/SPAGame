@@ -20,7 +20,7 @@ namespace SPAGame.Controllers
             _profileRepository = profileRepository;
         }
 
-        [HttpGet("profile")]
+        [HttpGet("profile")] // Returns the logged-in account's details for their profile
         public IActionResult Account(int AccountId)
         {
             var profile = _profileRepository.GetProfileByAccountId(AccountId);

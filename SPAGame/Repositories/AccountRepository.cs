@@ -21,9 +21,6 @@ namespace SPAGame.Repositories
             return _account;
         }
 
-        //Skriv kod som skapar en ny rad inuti Profiles i databasen
-        //när kontot skapas, t.ex. med hjälp av Profiles.
-
         public AccountModel GetByEmail(string? AccountEmail)
         {
             return _dbContext.Accounts.FirstOrDefault(a => a.AccountEmail == AccountEmail);

@@ -40,10 +40,8 @@ namespace SPAGame.Repositories
             return game;
         }
 
-        public GameModel StartGame(int AccountId)
+        public GameModel StartGame(int AccountId) // Creates a new game; gives a random number for the user to guess in 5 attempts
         {
-            //var account = _dbContext.Accounts.Find(AccountId);
-
             Random random = new Random();
 
             var game = new GameModel
@@ -60,31 +58,5 @@ namespace SPAGame.Repositories
 
             return game;
         }
-
-        /*public GameModel MakeGuess(int GameGuess, GameDto gameDto)
-        {
-            if (gameDto.GameGuess > gameDto.GameNumber)
-            {
-                gameDto.GameAttempts--;
-            }
-            else if (gameDto.GameGuess < gameDto.GameNumber)
-            {
-                gameDto.GameAttempts--;
-            }
-            else if (gameDto.GameAttempts == 0)
-            {
-                gameDto.GameActive = false;
-                gameDto.GamesPlayed++;
-                gameDto.GamesLost++;
-                _dbContext.SaveChanges();
-            }
-            else
-            {
-                gameDto.GameActive = false;
-                gameDto.GamesPlayed++;
-                gameDto.GamesWon++;
-                _dbContext.SaveChanges();
-            }
-        }*/
     }
 }

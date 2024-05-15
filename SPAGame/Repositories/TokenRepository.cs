@@ -21,7 +21,7 @@ namespace SPAGame.Repositories
         {
             List<Claim> claims = new List<Claim>
             {
-                // Converts int into string back into int as the ClaimType cannot take an int value initially
+                // Converts int into string, defines it as int as the ClaimType cannot take an int initially
                 // This had to be done as AccountId is an int and not a Guid
                 new Claim("AccountId", account.AccountId.ToString(), ClaimValueTypes.Integer),
                 new Claim("AccountName", account.AccountName),

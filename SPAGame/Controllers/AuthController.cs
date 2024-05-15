@@ -25,7 +25,7 @@ namespace SPAGame.Controllers
             _tokenRepository = tokenRepository;
         }
 
-        [HttpPost("register")]
+        [HttpPost("register")] // Registers account for the user
         public IActionResult Register(RegisterDto dto)
         {
             var _account = new AccountModel
@@ -77,7 +77,7 @@ namespace SPAGame.Controllers
             return Ok(new { response = "The account has been registered successfully." });
         }
 
-        [HttpPost("login")]
+        [HttpPost("login")] // User can login on their account upon which a JWT-token is created
         public IActionResult Login(LoginDto dto)
         {
             var _account = _accountRepository.GetByEmail(dto.AccountEmail);
@@ -103,28 +103,7 @@ namespace SPAGame.Controllers
 
         }
 
-        /*[HttpGet("account")]
-        public IActionResult Account()
-        {
-            try
-            {
-                var jwt = Request.Cookies["jwt"];
-
-                var token = _tokenRepository.VerifyToken(jwt);
-
-                int AccountId = int.Parse(token.Issuer);
-
-                var _account = _accountRepository.GetById(AccountId);
-
-                return Ok(_account);
-            }
-            catch (Exception)
-            {
-                return Unauthorized();
-            }
-        }*/
-
-        [HttpPost("logout")]
+        [HttpPost("logout")] // Logout makes sure that the JWT-token is deleted
         public IActionResult Logout()
         {
             Response.Cookies.Delete("jwt");
