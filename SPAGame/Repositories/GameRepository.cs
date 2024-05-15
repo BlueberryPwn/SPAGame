@@ -1,5 +1,6 @@
 ﻿using SPAGame.Data;
 using SPAGame.Models;
+using SPAGame.Models.DTOs;
 using System.ComponentModel.DataAnnotations;
 
 namespace SPAGame.Repositories
@@ -13,6 +14,23 @@ namespace SPAGame.Repositories
             _dbContext = dbContext;
         }
 
+        public GameModel GetActiveGameByAccountId(int AccountId)
+        {
+            return _dbContext.Games.FirstOrDefault(g => g.AccountId == AccountId && g.GameActive);
+        }
+
+        public GameModel GetGameByAccountId(int AccountId)
+        {
+            return _dbContext.Games
+                .FirstOrDefault(g => g.AccountId == AccountId);
+        }
+
+        public GameModel GetGameById(int GameId)
+        {
+            return _dbContext.Games
+                .FirstOrDefault(g => g.GameId == GameId);
+        }
+
         public GameModel LoadGame(int AccountId)
         {
             var game = _dbContext.Games
@@ -24,12 +42,14 @@ namespace SPAGame.Repositories
 
         public GameModel StartGame(int AccountId)
         {
+            //var account = _dbContext.Accounts.Find(AccountId);
+
             Random random = new Random();
 
             var game = new GameModel
             {
                 GameNumber = random.Next(1,100),
-                GameAttempts = 0,
+                GameAttempts = 5,
                 GameActive = true,
                 GameDate = DateTime.Today,
                 AccountId = AccountId
@@ -40,5 +60,31 @@ namespace SPAGame.Repositories
 
             return game;
         }
+
+        /*public GameModel MakeGuess(int GameGuess, GameDto gameDto)
+        {
+            if (gameDto.GameGuess > gameDto.GameNumber)
+            {
+                gameDto.GameAttempts--;
+            }
+            else if (gameDto.GameGuess < gameDto.GameNumber)
+            {
+                gameDto.GameAttempts--;
+            }
+            else if (gameDto.GameAttempts == 0)
+            {
+                gameDto.GameActive = false;
+                gameDto.GamesPlayed++;
+                gameDto.GamesLost++;
+                _dbContext.SaveChanges();
+            }
+            else
+            {
+                gameDto.GameActive = false;
+                gameDto.GamesPlayed++;
+                gameDto.GamesWon++;
+                _dbContext.SaveChanges();
+            }
+        }*/
     }
 }

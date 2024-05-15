@@ -33,32 +33,25 @@ namespace SPAGame.Repositories
                 .FirstOrDefault();
         }
 
-        /*public List<HighscoreModel> GetHighscoreByAccountId(int AccountId)
-        {
-            return _dbContext.Highscores
-                .Where(h => h.AccountId == AccountId)
-                .ToList();
-        }*/
-
         public List<HighscoreDto> GetHighscoresForToday(int amount)
         {
             var today = DateTime.Today;
 
             var query = _dbContext.Highscores
-                // This query joins the Highscores and Games tables
-                // The h => h.AccountId and g => g.AccountId properties are used for the join
-                // (h, g) => new { Highscore = h, Game = g } combines data from both joined tables
-                .Join(_dbContext.Games, h => h.AccountId, g => g.AccountId, (h, g) => new { Highscore = h, Game = g })
-                .Where(data => data.Game.GameDate.Date == today) // Filters by today's date
-                .OrderByDescending(data => data.Highscore.Score)
-                .Take(amount) // Takes a set amount of players from the database
-                .Select(data => new HighscoreDto
+                // Joins Highscores with Games using AccountId and creates a new object containing both entities
+                .Join(_dbContext.Games, h => h.AccountId, g => g.AccountId, (highscore, game) => new { highscore, game })
+                .Where(data => data.game.GameDate.Date == today)
+                .GroupBy(data => data.highscore.AccountId)
+                .Select(group => new HighscoreDto
                 {
-                    AccountId = data.Highscore.AccountId,
-                    AccountName = data.Highscore.Account.AccountName,
-                    GameDate = data.Game.GameDate,
-                    Score = data.Highscore.Score
+                    AccountId = group.Key, // AccountId is set as the key
+                    AccountName = group.First().highscore.Account.AccountName,
+                    GameDate = today,
+                    Score = group.Sum(x => x.highscore.Score)
                 })
+                .Where(h => h.Score > 0) // Excludes any player with a score of 0
+                .OrderByDescending(data => data.Score)
+                .Take(amount) // Takes a set amount of players from the database
                 .ToList();
 
             return query;
@@ -67,6 +60,7 @@ namespace SPAGame.Repositories
         public List<HighscoreDto> GetHighscoresForAllTime(int amount)
         {
             var query = _dbContext.Highscores
+                .Where(h => h.Score > 0) // Excludes any player with a score of 0
                 .OrderByDescending(h => h.Score)
                 .Take(amount) // Takes a set amount of players from the database
                 .Select(h => new HighscoreDto
@@ -79,5 +73,6 @@ namespace SPAGame.Repositories
 
             return query;
         }
+
     }
 }
