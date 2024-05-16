@@ -51,7 +51,7 @@ function Profile() {
         </h2>
         {isLoading && (
           <div className="p-2 text-center flex items-center justify-center">
-            <Spinner aria-label="Loading profile data" />
+            <Spinner aria-label="Loading profile data." />
           </div>
         )}
         {profileData.length > 0 && (

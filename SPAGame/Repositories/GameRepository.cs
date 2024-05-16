@@ -14,6 +14,18 @@ namespace SPAGame.Repositories
             _dbContext = dbContext;
         }
 
+        public bool? ExistingGame(int AccountId) // If AccountId exists in the table, proceeds to order by their last GameId and checks its GameActive; otherwise returns false
+        {
+            var game = _dbContext.Games
+                .Where(g => g.AccountId == AccountId)
+                .OrderByDescending(g => g.GameId)
+                .Select(g => g.GameActive)
+                .FirstOrDefault();
+
+            return game;
+        }
+
+
         public GameModel GetActiveGameByAccountId(int AccountId)
         {
             return _dbContext.Games.FirstOrDefault(g => g.AccountId == AccountId && g.GameActive);
@@ -46,7 +58,7 @@ namespace SPAGame.Repositories
 
             var game = new GameModel
             {
-                GameNumber = random.Next(1,100),
+                GameNumber = random.Next(1, 100),
                 GameAttempts = 5,
                 GameActive = true,
                 GameDate = DateTime.Today,

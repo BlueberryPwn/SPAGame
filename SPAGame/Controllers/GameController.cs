@@ -25,15 +25,10 @@ namespace SPAGame.Controllers
             _profileRepository = profileRepository;
         }
 
-        [HttpGet("gamestatus")] // Checks if the player has an active game ongoing
-        public IActionResult GameStatus(int AccountId)
+        [HttpGet("gamecheck")] // Checks if AccountId has an entry inside the table and returns the GameActive of their last entry
+        public IActionResult GameActiveCheck(int AccountId)
         {
-            var game = _gameRepository.LoadGame(AccountId);
-
-            if (game == null)
-            {
-                return NotFound("The account does not have an active game.");
-            }
+            var game = _gameRepository.ExistingGame(AccountId);
 
             return Ok(game);
         }
@@ -135,23 +130,23 @@ namespace SPAGame.Controllers
                 {
                     game.GameActive = false;
                     _dbContext.SaveChanges();
-                    return Ok($"Game over! The correct number was: {game.GameNumber}.");
+                    return Ok( new { response = $"Game over! The correct number was: {game.GameNumber}.", game.GameActive, game.GameNumber });
                 }
                 else if (GameGuess > game.GameNumber)
                 {
                     _dbContext.SaveChanges();
-                    return Ok("Too high! Guess lower.");
+                    return Ok(new { response = "Too high! Guess lower.", game.GameActive, game.GameAttempts });
                 }
                 else if (GameGuess < game.GameNumber)
                 {
                     _dbContext.SaveChanges();
-                    return Ok("Too low! Guess higher.");
+                    return Ok(new { response = "Too low! Guess higher.", game.GameActive, game.GameAttempts });
                 }
                 else
                 {
                     game.GameActive = false;
                     _dbContext.SaveChanges();
-                    return Ok($"Congratulations! You guessed the correct number: {game.GameNumber}!");
+                    return Ok( new { response = $"Congratulations! You guessed the correct number: {game.GameNumber}!", game.GameActive, game.GameNumber });
                 }
             }
             catch (Exception ex)

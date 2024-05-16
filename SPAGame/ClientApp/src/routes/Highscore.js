@@ -54,7 +54,7 @@ function Highscore() {
         </ButtonGroup>
         {isLoading && (
           <div className="p-2 text-center flex items-center justify-center">
-            <Spinner aria-label="Loading highscores" />
+            <Spinner aria-label="Loading highscore data." />
           </div>
         )}
         {highscoreData.length > 0 && (

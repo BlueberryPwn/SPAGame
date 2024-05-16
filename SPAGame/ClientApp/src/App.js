@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 import Foot from "./layouts/Foot";
 import { Nav } from "./layouts/Nav";
 import ProtectedRoutes from "./utils/ProtectedRoutes";
+import Game from "./routes/Game";
 import Highscore from "./routes/Highscore";
 import Home from "./routes/Home";
 import Login from "./routes/Login";
@@ -24,6 +25,7 @@ function App() {
           <Route element={<Register />} path="/register" />
           <Route element={<ProtectedRoutes />}>
             <Route element={<Highscore />} path="/highscore" />
+            <Route element={<Game />} path="/play" />
             <Route element={<Profile />} path="/profile" />
           </Route>
           <Route element={<PageNotFound />} path="*" />

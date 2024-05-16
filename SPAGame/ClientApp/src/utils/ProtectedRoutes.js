@@ -35,7 +35,7 @@ const ProtectedRoutes = () => {
   return isLoading ? (
     <div className="flex h-screen w-screen flex-col items-center justify-center bg-gradient-to-br from-cyan-500">
       {/*<div className="text-center">
-        <Spinner aria-label="Loading" />
+        <Spinner aria-label="Loading page." />
       </div>*/}
     </div>
   ) : (

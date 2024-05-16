@@ -36,6 +36,7 @@ export const Nav = () => {
       </Navbar.Brand>
       <Navbar.Collapse>
         <Navbar.Link href="/highscore">Highscore</Navbar.Link>
+        <Navbar.Link href="/play">Play</Navbar.Link>
         <Navbar.Link href="/profile">Profile</Navbar.Link>
       </Navbar.Collapse>
       <div className="flex md:order-2">
