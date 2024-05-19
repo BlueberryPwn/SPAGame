@@ -9,6 +9,14 @@ This is a single-page application where a user can play a number guessing game a
 
 The application handles all logic on the backend and presents the data to the frontend.
 
+## Tech Stack
+
+- ASP.NET
+- C#
+- JavaScript (React.js)
+- SQL Server
+- TailwindCSS
+
 ## Approach
 
 - ASP.NET Core Web API
@@ -27,6 +35,6 @@ The application handles all logic on the backend and presents the data to the fr
 The database consists of several tables which are Accounts, Games, Highscores and Profiles.
 
 - Accounts: Stores the accounts and their details: Id, name, email and password.
-- Games: Keeps data of all games, active and inactive.
+- Games: Stores all started games, active and inactive.
 - Highscores: Keeps count of the users' scores which are then displayed on the highscore page.
 - Profiles: Stores data related to the stats of the users, such as games played, won etc.
