@@ -4,7 +4,7 @@
 
 This is a single-page application where a user can play a number guessing game as well as:
 - Register and login on accounts
-- See highscores of all players from both today and all-time
+- See highscores of all players from today and all-time
 - Visit their profile and see their stats
 
 The application handles all logic on the backend and presents the data to the frontend.
@@ -15,7 +15,7 @@ The application handles all logic on the backend and presents the data to the fr
 - C#
 - JavaScript (React.js)
 - SQL Server
-- TailwindCSS
+- Tailwind CSS
 
 ## Approach
 
