@@ -2,7 +2,7 @@
 
 ## Intro
 
-This is a single-page application where a user can play a number guessing game as well as...
+This is a single-page application where a user can play a number guessing game as well as:
 - Register and login on accounts
 - See highscores of all players from both today and all-time
 - Visit their profile and see their stats
