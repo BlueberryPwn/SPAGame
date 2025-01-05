@@ -44,8 +44,8 @@ export const Login = () => {
     },
   });
 
-  const onSubmitHandler = async (e) => {
-    handleSubmit(e, account);
+  const onSubmitHandler = async (data) => {
+    //handleSubmit(e, account);
 
     try {
       const response = await axios.post(

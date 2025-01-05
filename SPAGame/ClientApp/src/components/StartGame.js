@@ -69,8 +69,8 @@ export const StartGame = () => {
     fetchData();
   }, []);
 
-  const onSubmitHandler = async (e) => {
-    handleSubmit(e, guess);
+  const onSubmitHandler = async (data) => {
+    //handleSubmit(e, guess);
 
     setIsLoading(true);
     try {
