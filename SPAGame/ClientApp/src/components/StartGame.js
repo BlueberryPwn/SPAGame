@@ -20,7 +20,6 @@ function parseToken() {
 const validationSchema = yup.object().shape({
   Guess: yup
     .number("Your guess has to be a number.")
-    //.trim()
     .min(1, "Your guess has to contain at least 1 number.")
     .max(100, "Your guess cannot contain more than 3 numbers.")
     .required("Please enter your guess."),
@@ -70,8 +69,6 @@ export const StartGame = () => {
   }, []);
 
   const onSubmitHandler = async (data) => {
-    //handleSubmit(e, guess);
-
     setIsLoading(true);
     try {
       const token = localStorage.getItem("token");

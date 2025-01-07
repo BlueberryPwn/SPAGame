@@ -67,7 +67,7 @@ function Highscore() {
               {highscoreData.map((item) =>
                 item.$values.map((subItem) => (
                   // The contents are inside the nested array $values and cannot be displayed right away
-                  // The nested array $values is accessed and its contents are mapped; they can then be displayed
+                  // The nested array $values is accessed, mapped and the contents can now be displayed
                   <TableRow
                     key={subItem.accountId}
                     className="bg-white dark:border-gray-700 dark:bg-gray-800"

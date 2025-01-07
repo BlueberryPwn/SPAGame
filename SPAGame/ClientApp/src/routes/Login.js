@@ -45,8 +45,6 @@ export const Login = () => {
   });
 
   const onSubmitHandler = async (data) => {
-    //handleSubmit(e, account);
-
     try {
       const response = await axios.post(
         "https://localhost:44487/Auth/login",
